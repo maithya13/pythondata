@@ -1,0 +1,76 @@
+# Import necessary libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the Iris dataset
+def load_data():
+    # Using seaborn to load the Iris dataset
+    data = sns.load_dataset('iris')
+    return data
+
+# Explore the data
+def explore_data(data):
+    print("Data Preview:\n", data.head())
+    print("\nData Info:")
+    print(data.info())
+    print("\nDescriptive Statistics:\n", data.describe())
+    print("\nUnique Species in the Dataset:", data['species'].unique())
+
+# Basic data analysis
+def basic_analysis(data):
+    # Calculate average measurements by species
+    mean_values = data.groupby('species').mean()
+    print("\nAverage measurements by species:\n", mean_values)
+
+# Visualizations
+def create_visualizations(data):
+    # Set up the visualizations
+    sns.set(style="whitegrid")
+    
+    # Pairplot to show relationships between features for each species
+    sns.pairplot(data, hue="species")
+    plt.suptitle("Pairplot of Iris Dataset", y=1.02)
+    plt.show()
+    
+    # Boxplot for feature distributions by species
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(data=data, x='species', y='sepal_length')
+    plt.title("Sepal Length Distribution by Species")
+    plt.show()
+
+    # Histogram for sepal length
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data['sepal_length'], bins=15, kde=True)
+    plt.title("Distribution of Sepal Length")
+    plt.xlabel("Sepal Length (cm)")
+    plt.show()
+
+# Findings and Observations
+def observations():
+    print("\nObservations:")
+    print("1. The pairplot shows clear separation between species based on petal dimensions.")
+    print("2. Setosa species generally have shorter sepal and petal lengths than the other species.")
+    print("3. Versicolor and Virginica show more overlap in sepal length, but petal length and width help differentiate them.")
+    print("4. The boxplot confirms that Setosa has distinctively shorter sepals compared to the other two species.")
+
+# Main function to run all steps
+def main():
+    # Load data
+    data = load_data()
+
+    # Data exploration
+    explore_data(data)
+
+    # Basic data analysis
+    basic_analysis(data)
+
+    # Visualizations
+    create_visualizations(data)
+
+    # Findings and observations
+    observations()
+
+# Execute the main function
+if __name__ == "__main__":
+    main()
